@@ -1,1 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petit Mignon — ハンドメイドショップ</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:    #F4829A;
+    --pink-lt: #FCE4EB;
+    --mint:    #7ECEC4;
+    --mint-lt: #DFF5F2;
+    --yellow:  #FFD166;
+    --cream:   #FFF8F0;
+    --text:    #3A2D35;
+    --muted:   #9A7F8A;
+    --white:   #ffffff;
+    --radius:  20px;
+  }
 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    background: var(--white);
+    border-bottom: 2px solid var(--pink-lt);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--pink);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .logo span { color: var(--mint); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  nav ul a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--pink); }
+  .nav-cart {
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.45rem 1.2rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .nav-cart:hover { background: #e0607a; transform: scale(1.04); }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: var(--pink-lt);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before,
+  .hero::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.25;
+  }
+  .hero::before {
+    width: 320px; height: 320px;
+    background: var(--pink);
+    top: -80px; left: -80px;
+  }
+  .hero::after {
+    width: 220px; height: 220px;
+    background: var(--yellow);
+    bottom: -60px; right: -40px;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--pink);
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .btn-primary {
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.85rem 2.2rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 12px rgba(244,130,154,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(244,130,154,0.4); }
+  .btn-outline {
+    background: transparent;
+    color: var(--pink);
+    border: 2px solid var(--pink);
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s;
+  }
+  .btn-outline:hover { background: var(--pink-lt); }
+
+  /* ===== SECTION WRAPPER ===== */
+  section { padding: 4rem 2rem; }
+  .inner { max-width: 1000px; margin: 0 auto; }
+  .section-title {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .section-title span { color: var(--pink); }
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ===== CATEGORY PILLS ===== */
+  #products { background: var(--white); }
+  .cat-pills {
+    display: flex;
+    gap: 0.7rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .cat-pill {
+    background: var(--cream);
+    color: var(--muted);
+    border: 2px solid transparent;
+    border-radius: 50px;
+    padding: 0.4rem 1.1rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cat-pill.active, .cat-pill:hover {
+    background: var(--pink-lt);
+    color: var(--pink);
+    border-color: var(--pink);
+  }
+
+  /* ===== PRODUCT GRID ===== */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .product-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 2px solid var(--pink-lt);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(244,130,154,0.15);
+  }
+  .product-img {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+  }
+  .badge-new {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--yellow);
+    color: #7A5700;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+  }
+  .badge-sale {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: var(--pink);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+  }
+  .product-body { padding: 1rem 1.1rem 1.2rem; }
+  .product-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .product-desc {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .price {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--pink);
+  }
+  .add-btn {
+    background: var(--mint);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .add-btn:hover { background: #5DBFB4; transform: scale(1.05); }
+  .add-btn:active { transform: scale(0.97); }
+
+  /* ===== FEATURES ===== */
+  #features { background: var(--mint-lt); }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 1.8rem 1.4rem;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .feature-card:hover { border-color: var(--mint); }
+  .feature-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+  .feature-card h3 { font-weight: 700; margin-bottom: 0.4rem; font-size: 1rem; }
+  .feature-card p { color: var(--muted); font-size: 0.85rem; }
+
+  /* ===== ABOUT ===== */
+  #about { background: var(--white); }
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .about-img {
+    background: var(--pink-lt);
+    border-radius: var(--radius);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
+  .about-text h2 {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .about-text h2 span { color: var(--pink); }
+  .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 0.95rem; }
+
+  /* ===== CONTACT ===== */
+  #contact { background: var(--cream); }
+  .contact-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    max-width: 560px;
+    margin: 0 auto;
+    border: 2px solid var(--pink-lt);
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem; }
+  input, textarea {
+    width: 100%;
+    border: 2px solid var(--pink-lt);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus { border-color: var(--pink); }
+  textarea { resize: vertical; min-height: 100px; }
+  .submit-btn {
+    width: 100%;
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 0.9rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .submit-btn:hover { background: #e0607a; transform: translateY(-1px); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--text);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+  }
+  footer .footer-logo {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 1.2rem;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ===== CART TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--mint);
+    color: var(--white);
+    padding: 0.8rem 1.4rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 999;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .about-inner { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Petit <span>Mignon</span> ✿</a>
+  <ul>
+    <li><a href="#products">商品</a></li>
+    <li><a href="#features">こだわり</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#contact">お問い合わせ</a></li>
+  </ul>
+  <button class="nav-cart" onclick="alert('カート機能は後ほど実装予定です🛒')">🛒 カート</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✨ ハンドメイドアクセサリー</div>
+  <h1>世界にひとつだけの<br><em>あなただけのかわいい</em></h1>
+  <p>ひとつひとつ丁寧に手作りした、あたたかみのあるアクセサリーをお届けします</p>
+  <div class="hero-btns">
+    <a href="#products" class="btn-primary">商品を見る 🌸</a>
+    <a href="#about" class="btn-outline">ショップについて</a>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="inner">
+    <h2 class="section-title">商品ラインナップ <span>✿</span></h2>
+    <p class="section-sub">すべてハンドメイド、一点もの・数量限定</p>
+    <div class="cat-pills">
+      <button class="cat-pill active">すべて</button>
+      <button class="cat-pill">アクセサリー</button>
+      <button class="cat-pill">バッグ・ポーチ</button>
+      <button class="cat-pill">ルームデコ</button>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="product-img" style="background:#FCE4EB;">
+          <span class="badge-new">NEW</span>🌸
+        </div>
+        <div class="product-body">
+          <div class="product-name">桜のピアス</div>
+          <div class="product-desc">樹脂粘土で作った桜モチーフ</div>
+          <div class="product-footer">
+            <span class="price">¥1,800</span>
+            <button class="add-btn" onclick="addToCart('桜のピアス')">カートへ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#DFF5F2;">
+          🍀
+        </div>
+        <div class="product-body">
+          <div class="product-name">クローバーネックレス</div>
+          <div class="product-desc">四つ葉のクローバー・レジン製</div>
+          <div class="product-footer">
+            <span class="price">¥2,400</span>
+            <button class="add-btn" onclick="addToCart('クローバーネックレス')">カートへ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#FFF3D4;">
+          <span class="badge-sale">SALE</span>⭐
+        </div>
+        <div class="product-body">
+          <div class="product-name">星のヘアピン set</div>
+          <div class="product-desc">3本セット、金・銀・ピンク</div>
+          <div class="product-footer">
+            <span class="price">¥1,200</span>
+            <button class="add-btn" onclick="addToCart('星のヘアピン set')">カートへ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#FCE4EB;">
+          🐰
+        </div>
+        <div class="product-body">
+          <div class="product-name">うさぎポーチ</div>
+          <div class="product-desc">手縫いフェルト・小物入れに</div>
+          <div class="product-footer">
+            <span class="price">¥3,200</span>
+            <button class="add-btn" onclick="addToCart('うさぎポーチ')">カートへ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#DFF5F2;">
+          <span class="badge-new">NEW</span>🌿
+        </div>
+        <div class="product-body">
+          <div class="product-name">葉っぱのブローチ</div>
+          <div class="product-desc">刺繍ブローチ、ナチュラル系</div>
+          <div class="product-footer">
+            <span class="price">¥2,000</span>
+            <button class="add-btn" onclick="addToCart('葉っぱのブローチ')">カートへ</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img" style="background:#FFF3D4;">
+          🌙
+        </div>
+        <div class="product-body">
+          <div class="product-name">月のリング</div>
+          <div class="product-desc">真鍮製・フリーサイズ</div>
+          <div class="product-footer">
+            <span class="price">¥2,800</span>
+            <button class="add-btn" onclick="addToCart('月のリング')">カートへ</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="inner">
+    <h2 class="section-title">Petit Mignon の <span>こだわり</span></h2>
+    <p class="section-sub">安心してお買い物を楽しんでいただくために</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤲</div>
+        <h3>すべてハンドメイド</h3>
+        <p>ひとつひとつ手で作った一点ものです</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3>丁寧な梱包</h3>
+        <p>かわいいラッピングでお届けします</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💌</div>
+        <h3>メッセージカード</h3>
+        <p>ご希望の方にお手紙を同封します</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>交換・返品対応</h3>
+        <p>商品に問題がある場合は対応します</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="inner">
+    <div class="about-inner">
+      <div class="about-img">🎨</div>
+      <div class="about-text">
+        <h2>ものづくりへの<br><span>想い</span></h2>
+        <p>「かわいい」と感じる瞬間を大切に。日々の生活に小さな幸せを添えてほしいという気持ちで、ひとつひとつ丁寧に制作しています。</p>
+        <p>素材選びからデザイン、制作まですべて一人で行っています。あなたの手元に届いたとき、笑顔になってもらえたら嬉しいです。</p>
+        <a href="#contact" class="btn-primary" style="margin-top:0.5rem; display:inline-block;">お問い合わせはこちら 💬</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <h2 class="section-title">お問い合わせ <span>✉</span></h2>
+    <p class="section-sub">オーダーメイドのご相談もお気軽にどうぞ</p>
+    <div class="contact-card">
+      <div class="form-group">
+        <label>お名前</label>
+        <input type="text" placeholder="山田 花子">
+      </div>
+      <div class="form-group">
+        <label>メールアドレス</label>
+        <input type="email" placeholder="example@mail.com">
+      </div>
+      <div class="form-group">
+        <label>メッセージ</label>
+        <textarea placeholder="商品について、オーダーについてなど、なんでもお気軽にどうぞ✿"></textarea>
+      </div>
+      <button class="submit-btn" onclick="alert('送信機能はサーバー導入後に実装します！')">送信する 🌸</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Petit Mignon ✿</div>
+  <p>© 2025 Petit Mignon. All rights reserved.</p>
+  <p style="margin-top:0.3rem;font-size:0.8rem;">ハンドメイドショップ — 心を込めて制作しています</p>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">🛒 カートに追加しました！</div>
+
+<script>
+  function addToCart(name) {
+    const toast = document.getElementById('toast');
+    toast.textContent = '🛒 ' + name + ' をカートに追加しました！';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  document.querySelectorAll('.cat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
